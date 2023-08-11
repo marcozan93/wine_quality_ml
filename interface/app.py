@@ -1,6 +1,5 @@
 import streamlit as st
 import requests
-import ast
 import pandas as pd
 from PIL import Image
 

@@ -1,0 +1,56 @@
+version: "3.7"
+
+services:
+  interface:
+    build: interface
+    ports:
+      - 8501:8501
+    networks:
+      AIservice:
+        aliases:
+          - interface.docker
+    depends_on:
+      - backend
+    volumes:
+      - ./interface:/app
+
+  backend:
+    build: backend
+    ports:
+      - 8000:8000
+    networks:
+      AIservice:
+        aliases:
+          - backend.docker
+    volumes:
+      - .backend/:/app
+
+  orion:
+    image: fiware/orion-ld
+    hostname: orion
+    container_name: fiware-orion
+    networks:
+      AIservice:
+        aliases:
+          - orion.docker
+    expose:
+      - "1026"
+    ports:
+      - "1027:1026"
+    depends_on:
+      - mongo-db
+    command: -dbhost mongo-db -logLevel DEBUG
+
+  mongo-db:
+    image: mongo:3.6
+    hostname: mongo-db
+    container_name: db-mongo
+    networks:
+      AIservice:
+        aliases:
+          - mongo.docker
+    command: --nojournal
+
+networks:
+  AIservice:
+    external: true

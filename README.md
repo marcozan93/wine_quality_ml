@@ -5,7 +5,7 @@ Technologies: python, sklearn, fastAPI, Streamlit, Docker (in progress).
 
 The structure of the repo is as follows:
 ```
-├───app
+├───backend
 │   └─── LassoModel.pkl
 |   └─── main.py
 ├───data
