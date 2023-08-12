@@ -1,0 +1,8 @@
+fastapi==0.101.0
+pydantic==2.1.1
+pydantic_core==2.4.0
+pydantic-extra-types==2.0.0
+pydantic-settings==2.0.2
+numpy==1.21.2
+uvicorn==0.23.2
+scikit-learn==0.24.2
