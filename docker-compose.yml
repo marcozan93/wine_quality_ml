@@ -1,56 +1,25 @@
-version: "3.7"
+version: "3"
 
 services:
-  interface:
-    build: interface
+  backend:
+    container_name: backend
+    build: backend/
     ports:
-      - 8501:8501
+      - "8000:8000"
     networks:
-      AIservice:
-        aliases:
-          - interface.docker
+      - deploy_network
+
+  interface:
+    container_name: interface
+    build: interface/
+    ports:
+      - "8501:8501"
     depends_on:
       - backend
-    volumes:
-      - ./interface:/app
-
-  backend:
-    build: backend
-    ports:
-      - 8000:8000
     networks:
-      AIservice:
-        aliases:
-          - backend.docker
-    volumes:
-      - .backend/:/app
-
-  orion:
-    image: fiware/orion-ld
-    hostname: orion
-    container_name: fiware-orion
-    networks:
-      AIservice:
-        aliases:
-          - orion.docker
-    expose:
-      - "1026"
-    ports:
-      - "1027:1026"
-    depends_on:
-      - mongo-db
-    command: -dbhost mongo-db -logLevel DEBUG
-
-  mongo-db:
-    image: mongo:3.6
-    hostname: mongo-db
-    container_name: db-mongo
-    networks:
-      AIservice:
-        aliases:
-          - mongo.docker
-    command: --nojournal
+      - deploy_network
 
 networks:
-  AIservice:
-    external: true
+  deploy_network:
+    driver: bridge
+

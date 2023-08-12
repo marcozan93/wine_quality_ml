@@ -18,15 +18,16 @@ def run():
                           key="total_sulfur_dioxide")
     data = {"total_sulfur_dioxide": sulf_diox}
     if st.button("Predict"):
-        response = requests.post("http://127.0.0.1:8000/predict", json=data)
+        response = requests.post("http://backend:8000/predict", json=data) #127.0.0.1
         response.raise_for_status()
         prediction = response.json()
-
-        st.success(f"The predicted quality of the wine is: **{round(prediction['prediction'],2)}**")
+       
         if prediction['prediction'] >= 5:
-            st.image(kevin)
+            st.success(f"The predicted quality of the wine is: **{round(prediction['prediction'],2)}**")
+            st.image(kevin, use_column_width="always")
         else:
-            st.image(michael)
+            st.warning(f"The predicted quality of the wine is: **{round(prediction['prediction'],2)}**")
+            st.image(michael, use_column_width="always")
 
 if __name__ == "__main__":
     run()

@@ -5,27 +5,24 @@ Technologies: python, sklearn, fastAPI, Streamlit, Docker (in progress).
 
 The structure of the repo is as follows:
 ```
+├───docker-compose.yml
 ├───backend
 │   └─── LassoModel.pkl
 |   └─── main.py
+|   └─── Dockerfile
 ├───data
 |   └─── WineQT.csv
 └───interface
     └─── app.py
-
+    └─── Dockerfile
 ```
-- <code>app</code> folder includes the fastAPI code.
+- <code>app</code> folder includes the fastAPI code and its associated Dockerfile.
 - <code>data</code> folder includes the data used for model training and testing.
-- <code>interface</code> folder incldues the frontend of the streamlit app.
+- <code>interface</code> folder incldues the frontend of the streamlit app including its associated Dockerfile.
 - <code>notebook_predictions.ipynb</code> was used to cerate the model.
 
-## To run the app locally:
-1. Go into the folder of the fastAPI app and run the following command:
-    \wine_quality_ml\app>uvicorn main:app --host 127.0.0.1 --port 8000 --reload
-This will run your API locally.
-
-2. Go into the folder of the streamlit app and run the following command:
-    \wine_quality_ml\interface>streamlit run app.py
-This will run the streamlit app locally on http://192.168.1.210:8501
-
-These two actions should be performed on two different terminals.
+## To run the app locally using docker compose:
+Open a terminal (cmd), make sure that docker daemon is running, then run:<br>
+<code>docker compose build</code><br>
+and successively<br>
+<code>docker compose up</code>

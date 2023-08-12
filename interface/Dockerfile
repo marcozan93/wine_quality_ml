@@ -1,13 +1,21 @@
 FROM python:3.9
 
-COPY requirements.txt app/requirements.txt
+RUN mkdir /interface
 
-WORKDIR /app
+# COPY requirements.txt app/requirements.txt
+
+COPY requirements.txt /interface
+
+# WORKDIR /app
+
+WORKDIR /interface
 
 RUN pip install -r requirements.txt
 
-COPY . /app
+# COPY . /app
+
+COPY . /interface
 
 EXPOSE 8501
 
-CMD ["streamlit", "run", "app.py"]
+CMD streamlit run --server.port 8501 app.py
