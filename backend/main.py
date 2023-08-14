@@ -10,9 +10,19 @@ app = FastAPI(title="Wine quality prediction",
               description="Lasso model that predicts the quality of the wine.")
 
 class WineData(BaseModel):
+    fixed_acidity: float
+    volatile_acidity: float
+    citric_acid: float
+    residual_sugar: float
+    chlorides: float
+    free_sulfur_dioxide: float
     total_sulfur_dioxide: float
+    density: float
+    pH: float
+    sulphates: float
+    alcohol: float
 
-model = pickle.load(open('LassoModel.pkl', 'rb'))
+model = pickle.load(open("RFModel.pkl", "rb"))
 
 @app.get("/")
 @app.get("/home")
@@ -24,9 +34,19 @@ def read_home():
 
 @app.post("/predict")
 async def predict(data: WineData):
-    new_input = np.array([[0, 0, 0, 0, 0, 0, data.total_sulfur_dioxide, 0, 0, 0, 0]])
+    new_input = np.array([[data.fixed_acidity,
+                           data.volatile_acidity,
+                           data.citric_acid,
+                           data.residual_sugar,
+                           data.chlorides,
+                           data.free_sulfur_dioxide,
+                           data.total_sulfur_dioxide,
+                           data.density,
+                           data.pH,
+                           data.sulphates,
+                           data.alcohol]])
     pred = model.predict(new_input)[0]
-    return {'prediction': pred}
+    return {"prediction": pred}
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
