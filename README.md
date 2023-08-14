@@ -1,13 +1,13 @@
 # wine_quality_ml
 App to predict the quality of wines.
 
-Technologies: python, sklearn, fastAPI, Streamlit, Docker (in progress).
+Technologies: python, sklearn, fastAPI, Streamlit, Docker.
 
 The structure of the repo is as follows:
 ```
 ├───docker-compose.yml
 ├───backend
-│   └─── LassoModel.pkl
+│   └─── RFModel.pkl
 |   └─── main.py
 |   └─── Dockerfile
 ├───data
