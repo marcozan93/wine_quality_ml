@@ -13,6 +13,7 @@
 #   ]
 # images: ['europe-west1-docker.pkg.dev/${PROJECT_ID}/wine-app']
 
+# wine-quality-office
 
 steps:
 - name: 'gcr.io/cloud-builders/docker'
@@ -20,18 +21,18 @@ steps:
   timeout: 120s
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['tag', 'backend', 'gcr.io/${PROJECT_ID}/backend']
+  args: ['tag', 'docker-compose_backend', 'gcr.io/wine-quality-office/backend']
   timeout: 120s
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['tag', 'interface', 'gcr.io/${PROJECT_ID}/interface']
+  args: ['tag', 'docker-compose_interface', 'gcr.io/wine-quality-office/interface']
   timeout: 120s
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/${PROJECT_ID}/backend']
+  args: ['push', 'gcr.io/wine-quality-office/backend']
   timeout: 120s
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/${PROJECT_ID}/interface']
+  args: ['push', 'gcr.io/wine-quality-office/interface']
   timeout: 120s
-images: ['gcr.io/${PROJECT_ID}/backend', 'gcr.io/${PROJECT_ID}/interface']
+images: ['gcr.io/wine-quality-office/backend', 'gcr.io/wine-quality-office/interface']
