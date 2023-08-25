@@ -1,14 +1,36 @@
+# steps:
+# - name: 'docker/compose:1.28.2'
+#   args: [
+#     '-p', 'europe-west1-docker.pkg.dev/${PROJECT_ID}/wine-app',
+#     '-f', './docker-compose.yml',
+#     'build'
+#   ]
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: [
+#     'tag',
+#     'wine-app',
+#     'europe-west1-docker.pkg.dev/${PROJECT_ID}/wine-app'
+#   ]
+# images: ['europe-west1-docker.pkg.dev/${PROJECT_ID}/wine-app']
+
 steps:
-- name: 'docker/compose:1.28.2'
-  args: [
-    '-p', 'europe-west1-docker.pkg.dev/${PROJECT_ID}/wine-app',
-    '-f', './docker-compose.yml',
-    'build'
-  ]
 - name: 'gcr.io/cloud-builders/docker'
-  args: [
-    'tag',
-    'wine-app',
-    'europe-west1-docker.pkg.dev/${PROJECT_ID}/wine-app'
-  ]
-images: ['europe-west1-docker.pkg.dev/${PROJECT_ID}/wine-app']
+  args: ['compose', '-f', 'docker-compose.yml', 'build']
+  timeout: 120s
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', 'backend', 'gcr.io/${PROJECT_ID}/backend']
+  timeout: 120s
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', 'interface', 'gcr.io/${PROJECT_ID}/interface']
+  timeout: 120s
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${PROJECT_ID}/backend']
+  timeout: 120s
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${PROJECT_ID}/interface']
+  timeout: 120s
+images: ['gcr.io/${PROJECT_ID}/backend', 'gcr.io/${PROJECT_ID}/interface']
