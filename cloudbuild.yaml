@@ -1,4 +1,14 @@
-  steps:
-  # running docker-compose
-  - name: 'docker/compose:1.26.2'
-    args: ['up', '-d']
+steps:
+- name: 'docker/compose:latest'
+  args: [
+    '-p', 'europe-west1-docker.pkg.dev/${PROJECT_ID}/wine-app',
+    '-f', './cloud_run/docker-compose.devapp.yml',
+    'up', '--build', 'web'
+  ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'tag',
+    'wine-app',
+    'europe-west1-docker.pkg.dev/${PROJECT_ID}/wine-app'
+  ]
+images: ['europe-west1-docker.pkg.dev/${PROJECT_ID}/wine-app']
