@@ -21,18 +21,10 @@ steps:
   timeout: 120s
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['tag', 'docker-compose_backend', 'gcr.io/wine-quality-office/backend']
+  args: ['push', 'backend']
   timeout: 120s
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['tag', 'docker-compose_interface', 'gcr.io/wine-quality-office/interface']
+  args: ['push', 'interface']
   timeout: 120s
-
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/wine-quality-office/backend']
-  timeout: 120s
-
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/wine-quality-office/interface']
-  timeout: 120s
-images: ['gcr.io/wine-quality-office/backend', 'gcr.io/wine-quality-office/interface']
+images: ['backend', 'interface']
