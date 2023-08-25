@@ -21,10 +21,13 @@ steps:
   timeout: 120s
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'backend']
+  args: ['push', 'gcr.io/wine-quality-office/backend']
   timeout: 120s
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'interface']
+  args: ['push', 'gcr.io/wine-quality-office/interface']
   timeout: 120s
-images: ['backend', 'interface']
+images: ['gcr.io/wine-quality-office/backend', 'gcr.io/wine-quality-office/interface']
+
+
+
