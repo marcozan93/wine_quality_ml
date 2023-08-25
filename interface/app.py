@@ -84,13 +84,19 @@ def run():
         response = requests.post("http://backend:8000/predict", json=data) #127.0.0.1
         response.raise_for_status()
         prediction = response.json()
-       
-        if prediction['prediction'] >= 5:
-            st.success(f"The predicted quality of the wine is: **{round(prediction['prediction'],2)}**")
-            st.image(kevin, use_column_width="always")
-        else:
-            st.warning(f"The predicted quality of the wine is: **{round(prediction['prediction'],2)}**")
-            st.image(michael, use_column_width="always")
+        
+        with st.container():
+            col1c, col2c = st.columns(2)
+            if prediction['prediction'] >= 5.5:
+                with col1c:
+                    st.success(f"The predicted quality of the wine is: **{round(prediction['prediction'],2)}**")
+                with col2c:
+                    st.image(kevin, use_column_width="always")
+            else:
+                with col1c:
+                    st.warning(f"The predicted quality of the wine is: **{round(prediction['prediction'],2)}**")
+                with col2c:    
+                    st.image(michael, use_column_width="always")
 
 if __name__ == "__main__":
     run()
