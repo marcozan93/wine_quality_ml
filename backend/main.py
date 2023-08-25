@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import pickle
 import numpy as np
+import pandas as pd
 import uvicorn
 
 
@@ -34,7 +35,7 @@ def read_home():
 
 @app.post("/predict")
 async def predict(data: WineData):
-    new_input = np.array([[data.fixed_acidity,
+    new_input = pd.DataFrame(np.array([[data.fixed_acidity,
                            data.volatile_acidity,
                            data.citric_acid,
                            data.residual_sugar,
@@ -44,8 +45,12 @@ async def predict(data: WineData):
                            data.density,
                            data.pH,
                            data.sulphates,
-                           data.alcohol]])
+                           data.alcohol]]),
+                columns=["fixed_acidity", "volatile_acidity", "citric_acid", "residual_sugar",
+                        "chlorides", "free_sulfur_dioxide", "total_sulfur_dioxide", "density",
+                        "pH", "sulphates", "alcohol"])
     pred = model.predict(new_input)[0]
+    
     return {"prediction": pred}
 
 if __name__ == "__main__":
