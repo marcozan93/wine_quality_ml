@@ -1,5 +1,5 @@
 steps:
-- name: 'docker/compose:latest'
+- name: 'docker/compose:1.28.2'
   args: [
     '-p', 'europe-west1-docker.pkg.dev/${PROJECT_ID}/wine-app',
     '-f', './cloud_run/docker-compose.devapp.yml',
