@@ -3,7 +3,7 @@ steps:
   args: [
     '-p', 'europe-west1-docker.pkg.dev/${PROJECT_ID}/wine-app',
     '-f', './docker-compose.yml',
-    'up', '--build'
+    'build'
   ]
 - name: 'gcr.io/cloud-builders/docker'
   args: [
