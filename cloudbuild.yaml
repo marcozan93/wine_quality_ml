@@ -13,6 +13,7 @@
 #   ]
 # images: ['europe-west1-docker.pkg.dev/${PROJECT_ID}/wine-app']
 
+
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['compose', '-f', 'docker-compose.yml', 'build']
