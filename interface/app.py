@@ -81,7 +81,8 @@ def run():
         "alcohol": alcohol
         }
     if st.button("Predict"):
-        response = requests.post("http://backend:8000/predict", json=data) #127.0.0.1
+        # response = requests.post("http://backend:8000/predict", json=data) #127.0.0.1
+        response = requests.post("https://myimagebackend-lc3ojkzooa-ew.a.run.app/predict", json=data)
         response.raise_for_status()
         prediction = response.json()
         
