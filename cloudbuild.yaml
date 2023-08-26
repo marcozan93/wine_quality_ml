@@ -39,7 +39,7 @@
 steps:
   # Build the Docker Compose services
   - name: 'docker/compose:1.26.2'
-    entrypoint: 'bash'
+    entrypoint: '/bin/sh'  # Use the shell available in Alpine Linux
     args:
       - '-c'
       - |
@@ -50,6 +50,7 @@ steps:
   # Push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'europe-west1-docker.pkg.dev/$PROJECT_ID/wine-repo/myimage:$SHORT_SHA']
+
 
 
 
