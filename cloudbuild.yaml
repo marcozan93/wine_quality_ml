@@ -37,13 +37,13 @@
 # - "gcr.io/${_GCP_PROJECT}/${_SERVICE_NAME}:$COMMIT_SHA"
 
 steps:
-# running docker-compose
-- name: 'docker/compose:1.26.2'
-  args: ['build', '-t', 'europe-west1-docker.pkg.dev/$PROJECT_ID/wine-repo/myimage:$SHORT_SHA']
+  # running docker-compose
+  - name: 'docker/compose:1.26.2'
+    args: ['build', '-t', 'europe-west1-docker.pkg.dev/$PROJECT_ID/wine-repo/myimage:$SHORT_SHA']
 
-# Push the container image to Container Registry
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'europe-west1-docker.pkg.dev/$PROJECT_ID/wine-repo/myimage:$SHORT_SHA']
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'europe-west1-docker.pkg.dev/$PROJECT_ID/wine-repo/myimage:$SHORT_SHA']
 
 
 
