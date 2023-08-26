@@ -16,18 +16,34 @@
 # wine-quality-office
 
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['compose', '-f', 'docker-compose.yml', 'build']
-  timeout: 120s
 
+# Build the backend image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/wine-quality-office/backend']
-  timeout: 120s
+  args: ['build', '-t', 'backend', './backend']
 
+# Build the interface image 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/wine-quality-office/interface']
-  timeout: 120s
-images: ['gcr.io/wine-quality-office/backend', 'gcr.io/wine-quality-office/interface']
+  args: ['build', '-t', 'interface', './interface']
+
+# Push the backend image to Artifact Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/backend']
+
+# Push the interface image to Artifact Registry
+- name: 'gcr.io/cloud-builders/docker' 
+  args: ['push', 'gcr.io/$PROJECT_ID/interface']
+
+# Deploy the backend service
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args: ['run', 'deploy', 'backend', '--image', 'gcr.io/$PROJECT_ID/backend', '--port', '8000']
+
+# Deploy the interface service 
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args: ['run', 'deploy', 'interface', '--image', 'gcr.io/$PROJECT_ID/interface', '--port', '8501']
+
+images:
+- 'gcr.io/$PROJECT_ID/backend'
+- 'gcr.io/$PROJECT_ID/interface'
 
 
 
