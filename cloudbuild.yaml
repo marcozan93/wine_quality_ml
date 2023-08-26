@@ -15,27 +15,47 @@
 
 # wine-quality-office
 
-steps:
-    # Build the container image
-    - name: "gcr.io/cloud-builders/docker"
-      args:
-        - "compose"
-        - "build"
-        - "-t"
-        - "gcr.io/${_GCP_PROJECT}/${_SERVICE_NAME}:$COMMIT_SHA"
-        # - "--build-arg"
-        # - "ENV_PROJECT_ID=${_GCP_PROJECT}"
-        # - "--build-arg"
-        # - "ENV_LOGLEVEL=${_LOGLEVEL}"
-        # - "."
+# steps:
+#     # Build the container image
+#     - name: "gcr.io/cloud-builders/docker"
+#       args:
+#         - "compose"
+#         - "build"
+#         - "-t"
+#         - "gcr.io/${_GCP_PROJECT}/${_SERVICE_NAME}:$COMMIT_SHA"
+#         # - "--build-arg"
+#         # - "ENV_PROJECT_ID=${_GCP_PROJECT}"
+#         # - "--build-arg"
+#         # - "ENV_LOGLEVEL=${_LOGLEVEL}"
+#         # - "."
 
-    # Push image to Google Container Registry
-    - name: "gcr.io/cloud-builders/docker"
-      args: ["push", "gcr.io/${_GCP_PROJECT}/${_SERVICE_NAME}:$COMMIT_SHA"]
+#     # Push image to Google Container Registry
+#     - name: "gcr.io/cloud-builders/docker"
+#       args: ["push", "gcr.io/${_GCP_PROJECT}/${_SERVICE_NAME}:$COMMIT_SHA"]
+
+# images:
+# - "gcr.io/${_GCP_PROJECT}/${_SERVICE_NAME}:$COMMIT_SHA"
+
+substitutions:
+  _DOCKER_COMPOSE_VERSION: 1.28.2
+steps:
+- name: 'docker/compose:1.28.2'
+  args:
+  - 'build'
+  - '--build-arg'
+  - 'DOCKER_COMPOSE_VERSION=${_DOCKER_COMPOSE_VERSION}'
+  - '-t'
+  - 'gcr.io/$PROJECT_ID/cloudbuild-demo-dockercompose:latest'
+  - '-t'
+  - 'gcr.io/$PROJECT_ID/cloudbuild-demo-dockercompose:${_DOCKER_COMPOSE_VERSION}'
+  - '.'
+- name: 'gcr.io/$PROJECT_ID/cloudbuild-demo-dockercompose'
+  args: ['version']
 
 images:
-- "gcr.io/${_GCP_PROJECT}/${_SERVICE_NAME}:$COMMIT_SHA"
-
+- 'gcr.io/$PROJECT_ID/cloudbuild-demo-dockercompose:latest'
+- 'gcr.io/$PROJECT_ID/cloudbuild-demo-dockercompose:${_DOCKER_COMPOSE_VERSION}'
+tags: ['cloud-builders-community']
 
 
 
