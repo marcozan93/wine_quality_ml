@@ -38,12 +38,12 @@
 
 steps:
 # running docker-compose
-- name: 'gcr.io/cloud-builders/docker/compose:1.26.2'
-  args: ['build', '-t', 'europe-west1-docker.pkg.dev/$PROJECT_ID/$_REPO_NAME/myimage:$SHORT_SHA']
+- name: 'docker/compose:1.26.2'
+  args: ['build', '-t', 'europe-west1-docker.pkg.dev/$PROJECT_ID/wine-repo/myimage:$SHORT_SHA']
 
 # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/$_REPO_NAME/myimage:$SHORT_SHA']
+  args: ['push', 'europe-west1-docker.pkg.dev/$PROJECT_ID/wine-repo/myimage:$SHORT_SHA']
 
 
 
