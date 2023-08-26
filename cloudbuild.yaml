@@ -36,26 +36,14 @@
 # images:
 # - "gcr.io/${_GCP_PROJECT}/${_SERVICE_NAME}:$COMMIT_SHA"
 
-substitutions:
-  _DOCKER_COMPOSE_VERSION: 1.28.2
 steps:
-- name: 'docker/compose:1.28.2'
-  args:
-  - 'build'
-  - '--build-arg'
-  - 'DOCKER_COMPOSE_VERSION=${_DOCKER_COMPOSE_VERSION}'
-  - '-t'
-  - 'gcr.io/$PROJECT_ID/cloudbuild-demo-dockercompose:latest'
-  - '-t'
-  - 'gcr.io/$PROJECT_ID/cloudbuild-demo-dockercompose:${_DOCKER_COMPOSE_VERSION}'
-  - '.'
-- name: 'gcr.io/$PROJECT_ID/cloudbuild-demo-dockercompose'
-  args: ['version']
+# running docker-compose
+- name: 'gcr.io/cloud-builders/docker/compose:1.26.2'
+  args: ['build', '-t', 'europe-west1-docker.pkg.dev/$PROJECT_ID/$_REPO_NAME/myimage:$SHORT_SHA']
 
-images:
-- 'gcr.io/$PROJECT_ID/cloudbuild-demo-dockercompose:latest'
-- 'gcr.io/$PROJECT_ID/cloudbuild-demo-dockercompose:${_DOCKER_COMPOSE_VERSION}'
-tags: ['cloud-builders-community']
+# Push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/$_REPO_NAME/myimage:$SHORT_SHA']
 
 
 
