@@ -1,5 +1,5 @@
 # wine_quality_ml
-App to predict the quality of wines.
+App to predict the quality of wines. A complete description of this project can be foun din this Medium article https://medium.com/@marcozaninitaly/end-to-end-machine-learning-using-fastapi-streamlit-docker-google-cloud-platform-fcdf9f9216e0
 
 Technologies: python, sklearn, fastAPI, Streamlit, Docker.
 
