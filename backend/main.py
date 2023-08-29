@@ -7,8 +7,8 @@ import uvicorn
 
 
 app = FastAPI(title="Wine quality prediction",
-              version = "0.1",
-              description="Lasso model that predicts the quality of the wine.")
+              version = "1.0",
+              description="Random forest model that predicts the quality of the wine.")
 
 class WineData(BaseModel):
     fixed_acidity: float

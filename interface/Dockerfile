@@ -2,17 +2,14 @@ FROM python:3.9
 
 RUN mkdir /interface
 
-# COPY requirements.txt app/requirements.txt
 
 COPY requirements.txt /interface
 
-# WORKDIR /app
 
 WORKDIR /interface
 
 RUN pip install -r requirements.txt
 
-# COPY . /app
 
 COPY . /interface
 
