@@ -30,9 +30,9 @@ and successively<br>
 
 
 ## App Deployment on Google Cloud Platform
-This application will be hosted for a short period of time on Google Cloud Platform using<br>
-Cloud Build to create two separate images of the interface and backend, and Cloud Run which<br>
-will create two separate services (i.e., one for backend and one for interface).
+This application is currently hosted on Google Cloud Platform using Cloud Build <br>
+to create two separate images of the interface and backend, and Cloud Run which<br>
+creates two separate services (i.e., one for backend and one for interface).
 
 The two services are communicationg with each other as they are public services. The app can<br>
 be accessed at the following link https://myimage-lc3ojkzooa-ew.a.run.app/ from desktop or mobile.
